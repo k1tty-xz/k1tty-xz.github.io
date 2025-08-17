@@ -1,0 +1,9 @@
+Origin: k1tty-xz
+Label: k1tty-xz
+Suite: stable
+Version: 1.0
+Codename: ios
+Architectures: iphoneos-arm
+Components: main
+Description: The latest Python 3.12 for jailbroken iOS.
+Icon: https://k1tty-xz.github.io/icons/repo-icon.png
