@@ -6,3 +6,12 @@ Codename: ios
 Architectures: iphoneos-arm
 Components: main
 Description: Tweaks by k1tty-xz ~ Tamior
+
+MD5Sum:
+ 99380b4e41ed5ad196244fabfe330626  634  Packages
+ 821a052d090405c6da8ae0194fc4c2af  463  Packages.gz
+ c1245d1ca3dfd45c3c8495cc0b06f416  491  Packages.bz2
+SHA256:
+ e9d5d505962f439ae0c857a6cd3a224acfa99c2dc54ac1f592150ffb6a052dd0  634  Packages
+ 54bba236dca10a52be8ba9a86b584f85078badb53b68a7fa3675179fbc5ec96e  463  Packages.gz
+ 1ca333fa96236137f6cca11ccf0d0c34286d72fdb1cdd39621e5e9baa159ad08  491  Packages.bz2
