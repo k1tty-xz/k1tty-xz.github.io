@@ -8,10 +8,10 @@ Components: main
 Description: Tweaks by k1tty-xz ~ Tamior
 
 MD5Sum:
- 99380b4e41ed5ad196244fabfe330626  634  Packages
- 821a052d090405c6da8ae0194fc4c2af  463  Packages.gz
- c1245d1ca3dfd45c3c8495cc0b06f416  491  Packages.bz2
+ aabae1e67562d186acb1bd883f0b1651  666  Packages
+ 59d8228aedb9113d17088bdc9af78e24  477  Packages.gz
+ 8b90d827b13a6ba96c8365b986b5d4ae  514  Packages.bz2
 SHA256:
- e9d5d505962f439ae0c857a6cd3a224acfa99c2dc54ac1f592150ffb6a052dd0  634  Packages
- 54bba236dca10a52be8ba9a86b584f85078badb53b68a7fa3675179fbc5ec96e  463  Packages.gz
- 1ca333fa96236137f6cca11ccf0d0c34286d72fdb1cdd39621e5e9baa159ad08  491  Packages.bz2
+ 048994a585c62c99664192acb9c57b7880be5c5be1ddab48579524e7d0291ce9b  666  Packages
+ 3be0270971d446c4983dca07a5555367f8e0cbd19048af1db52ca43b06457cd6  477  Packages.gz
+ 9a89145336b599a0b1a5f301eb85ddead810d66dd725348fe6a1f2276e83a708  514  Packages.bz2

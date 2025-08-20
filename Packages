@@ -4,14 +4,14 @@ Architecture: iphoneos-arm
 Maintainer: k1tty-xz
 Installed-Size: 95568
 Filename: debs/python3.12_3.12.5-1_iphoneos-arm.deb
-Size: 20499012
-MD5sum: e9cf921a292b7c12307ad91c63abe327
-SHA1: 2f9add2fdbe31569c91ef0bda7a0f2937046d424
-SHA256: c46b9ad01d2aa7e0c2c2ea5b5f05fded18c802ce61e36c2882bb3386cb194605
+Size: 20492020
+MD5sum: 917aaa93c82a0e269316e52a4c5f224c
+SHA1: 3901aeced83e996a8f2dd588bc80229ec5ef1138
+SHA256: c5a9fe2f1ad6d8ef2ed75eee7c45413a2f7730cea284db9dcdd54798303dd665
 Section: Development
 Priority: optional
 Description: CPython 3.12.5 interpreter, standard library, and tools.
  Includes OpenSSL (ssl) support, ctypes FFI, and pip (package manager).
-Icon: https://k1tty-xz.github.io/icons/AppIcon-60pt@2x-squircle.png
+Icon: https://github.com/k1tty-xz/python3.12-ios-arm64/blob/main/icons/AppIcon-60pt@3x-squircle.png
 Name: Python 3.12 for iOS (arm64)
 
