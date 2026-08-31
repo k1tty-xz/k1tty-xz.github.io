@@ -1,16 +1,16 @@
 Package: com.k1tty-xz.python3
-Version: 3.14.7-12
+Version: 3.14.7-13
 Architecture: iphoneos-arm
 Maintainer: k1tty-xz
 Installed-Size: 77504
 Depends: firmware (>= 14.5)
 Conflicts: python3, org.coolstar.python3, com.bingner.python3
 Replaces: python3, org.coolstar.python3, com.bingner.python3
-Filename: debs/python3.14_3.14.7-12_iphoneos-arm.deb
-Size: 12684260
-MD5sum: 4efa74a70ce202b1f295f9f91ba9bb8b
-SHA1: 7d674f2f40dbf027a54ea52277a75b3d7761f777
-SHA256: f54a615237838a3af3e9cf4f1948125252b60a37947bc56c252bd917c087a7b5
+Filename: debs/python3.14_3.14.7-13_iphoneos-arm.deb
+Size: 12684852
+MD5sum: 41a2dc9e60281ee95d0c2bf9a19dd50a
+SHA1: afc6131c22c7bb031aa586a70887efbc7509aca5
+SHA256: 45e85a0cd99a51b3e3b7ee85c436095c54ba9e521cf60d8aaf63b88279a7abcd
 Section: Development
 Priority: optional
 Description: The Python 3.14 interpreter for iOS.
