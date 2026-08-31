@@ -1,6 +1,8 @@
 name: Sync CPython package feed
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
