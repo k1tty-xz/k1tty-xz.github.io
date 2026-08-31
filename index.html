@@ -3,250 +3,239 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0b0d16">
+  <meta name="theme-color" content="#f1f0ec">
   <meta name="description" content="CPython 3.14 for jailbroken iOS arm64 devices.">
   <link rel="icon" href="./avatar.png" type="image/png">
-  <title>CPython for iOS · k1tty-xz</title>
+  <title>CPython for iOS — k1tty-xz</title>
   <style>
     :root {
-      color-scheme: dark;
-      --bg: #0b0d16;
-      --surface: #131725;
-      --surface-strong: #191e30;
-      --text: #f5f7ff;
-      --muted: #9aa3bb;
-      --line: #293047;
-      --violet: #a78bfa;
-      --cyan: #67e8f9;
+      color-scheme: light dark;
+      --background: #f1f0ec;
+      --foreground: #191a18;
+      --muted: #6e706b;
+      --line: #d7d5ce;
+      --accent: #b65335;
+      --code: #e7e5de;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --background: #171816;
+        --foreground: #f0efe9;
+        --muted: #a5a69e;
+        --line: #363832;
+        --accent: #e78667;
+        --code: #22241f;
+      }
     }
 
     * { box-sizing: border-box; }
 
     body {
-      min-height: 100vh;
       margin: 0;
-      padding: 24px;
-      display: grid;
-      place-items: center;
-      overflow-x: hidden;
-      background:
-        radial-gradient(circle at 15% 10%, #312e81 0, transparent 34%),
-        radial-gradient(circle at 85% 90%, #164e63 0, transparent 30%),
-        var(--bg);
-      color: var(--text);
-      font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--background);
+      color: var(--foreground);
+      font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    .shell {
-      width: min(100%, 620px);
-      padding: clamp(28px, 6vw, 52px);
-      background: #111522cc;
-      border: 1px solid #ffffff16;
-      border-radius: 28px;
-      box-shadow: 0 28px 90px #0008;
-      backdrop-filter: blur(18px);
+    .page {
+      width: min(100% - 48px, 720px);
+      margin: 0 auto;
+      padding: 48px 0 40px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 72px;
+    }
+
+    .identity {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--foreground);
+      font-size: .92rem;
+      font-weight: 650;
+      text-decoration: none;
     }
 
     .avatar {
-      width: 72px;
-      height: 72px;
-      display: block;
-      margin-bottom: 26px;
-      padding: 3px;
-      border-radius: 22px;
-      background: linear-gradient(135deg, var(--violet), var(--cyan));
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
       object-fit: cover;
-      object-position: center;
+    }
+
+    nav a,
+    footer a {
+      color: var(--muted);
+      font-size: .88rem;
+      text-decoration: none;
+    }
+
+    nav a:hover,
+    footer a:hover {
+      color: var(--accent);
     }
 
     .eyebrow,
     .label {
       margin: 0;
-      color: var(--cyan);
-      font-size: .74rem;
+      color: var(--accent);
+      font-size: .72rem;
       font-weight: 750;
-      letter-spacing: .14em;
+      letter-spacing: .13em;
       text-transform: uppercase;
     }
 
-    .eyebrow {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .eyebrow::before {
-      width: 7px;
-      height: 7px;
-      content: "";
-      border-radius: 50%;
-      background: var(--cyan);
-      box-shadow: 0 0 14px var(--cyan);
-    }
-
     h1 {
-      max-width: 500px;
-      margin: 12px 0 16px;
-      font-size: clamp(2.6rem, 8vw, 4.5rem);
+      max-width: 620px;
+      margin: 12px 0 18px;
+      font-size: clamp(2.8rem, 8vw, 5.6rem);
       line-height: .98;
-      letter-spacing: -.065em;
+      letter-spacing: -.075em;
+      font-weight: 760;
     }
 
     .intro {
-      max-width: 500px;
+      max-width: 490px;
       margin: 0;
       color: var(--muted);
       font-size: 1.08rem;
     }
 
-    .package {
-      margin-top: 36px;
-      padding: 20px;
-      background: #ffffff08;
-      border: 1px solid var(--line);
-      border-radius: 18px;
+    .rule {
+      margin: 64px 0 0;
+      border: 0;
+      border-top: 1px solid var(--line);
     }
 
-    .package-head {
+    .section {
+      padding: 26px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .package-line {
       display: flex;
-      align-items: start;
+      align-items: baseline;
       justify-content: space-between;
-      gap: 16px;
+      gap: 24px;
+      margin-top: 8px;
     }
 
-    .package h2 {
-      margin: 5px 0 0;
-      font-size: 1.25rem;
+    h2 {
+      margin: 0;
+      font-size: 1.15rem;
+      font-weight: 650;
       letter-spacing: -.02em;
     }
 
-    .tag {
-      padding: 5px 9px;
-      border: 1px solid #a78bfa55;
-      border-radius: 999px;
-      color: var(--violet);
-      font-size: .76rem;
+    .arch {
+      color: var(--muted);
+      font: .8rem ui-monospace, SFMono-Regular, Menlo, monospace;
       white-space: nowrap;
     }
 
     dl {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin: 22px 0 0;
+      gap: 24px;
+      margin: 24px 0 0;
     }
 
     dt {
       color: var(--muted);
-      font-size: .78rem;
+      font-size: .8rem;
     }
 
     dd {
-      margin: 3px 0 0;
+      margin: 2px 0 0;
       font-weight: 650;
     }
 
-    .install {
-      margin-top: 30px;
+    .source {
+      display: block;
+      margin-top: 18px;
+      padding: 12px 14px;
+      overflow-wrap: anywhere;
+      background: var(--code);
+      border: 1px solid var(--line);
+      border-radius: 5px;
+      color: var(--foreground);
+      font: .82rem ui-monospace, SFMono-Regular, Menlo, monospace;
+      text-decoration: none;
     }
 
-    .actions {
+    .source:hover {
+      border-color: var(--accent);
+    }
+
+    .links {
       display: flex;
       flex-wrap: wrap;
-      gap: 9px;
-      margin-top: 14px;
+      gap: 22px;
+      margin-top: 18px;
     }
 
-    a {
-      color: inherit;
-    }
-
-    .button {
-      min-height: 43px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 8px 14px;
-      border: 1px solid var(--line);
-      border-radius: 11px;
-      color: var(--text);
-      text-decoration: none;
-      font-size: .92rem;
+    .links a {
+      color: var(--accent);
       font-weight: 650;
-      transition: border-color .2s, transform .2s, background .2s;
+      text-underline-offset: 3px;
     }
 
-    .button:hover {
-      border-color: var(--violet);
-      background: #ffffff08;
-      transform: translateY(-1px);
-    }
-
-    .button.primary {
-      border-color: transparent;
-      background: linear-gradient(135deg, var(--violet), var(--cyan));
-      color: #0b0d16;
-    }
-
-    .url {
+    .note {
       margin: 18px 0 0;
       color: var(--muted);
-      font-size: .84rem;
-    }
-
-    code {
-      color: var(--text);
-      overflow-wrap: anywhere;
-      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: .88rem;
     }
 
     footer {
       display: flex;
       justify-content: space-between;
       gap: 16px;
-      margin-top: 34px;
-      color: var(--muted);
-      font-size: .8rem;
+      padding-top: 26px;
     }
 
-    footer a {
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      color: var(--text);
-    }
-
-    @media (max-width: 480px) {
-      .shell { border-radius: 22px; }
-      dl { grid-template-columns: repeat(2, 1fr); }
-      .button { flex: 1 1 130px; }
+    @media (max-width: 500px) {
+      .page { width: min(100% - 32px, 720px); }
+      header { padding-bottom: 56px; }
+      dl { grid-template-columns: 1fr 1fr; }
+      .package-line { align-items: start; flex-direction: column; gap: 4px; }
       footer { flex-direction: column; }
     }
   </style>
 </head>
 <body>
-  <main class="shell">
-    <img class="avatar" src="./avatar.png" alt="k1tty-xz profile picture">
-    <p class="eyebrow">k1tty-xz · iOS repository</p>
-    <h1>Python, built for iOS.</h1>
-    <p class="intro">
-      A native CPython runtime for jailbroken arm64 devices. Small,
-      current, and ready to install.
-    </p>
+  <main class="page">
+    <header>
+      <a class="identity" href="https://github.com/k1tty-xz">
+        <img class="avatar" src="./avatar.png" alt="k1tty-xz profile picture">
+        <span>k1tty-xz</span>
+      </a>
+      <nav><a href="https://github.com/k1tty-xz/python-ios-arm64">Source on GitHub ↗</a></nav>
+    </header>
 
-    <section class="package" aria-labelledby="package-title">
-      <div class="package-head">
-        <div>
-          <p class="label">Latest package</p>
-          <h2 id="package-title">Python 3.14.7-10</h2>
-        </div>
-        <span class="tag">iphoneos-arm</span>
+    <section aria-labelledby="title">
+      <p class="eyebrow">iOS repository</p>
+      <h1 id="title">CPython for iOS.</h1>
+      <p class="intro">A native CPython 3.14 build for jailbroken arm64 devices running iOS 14.5 or newer.</p>
+    </section>
+
+    <hr class="rule">
+
+    <section class="section" aria-labelledby="package">
+      <p class="label">Package</p>
+      <div class="package-line">
+        <h2 id="package">Python 3.14.7-10</h2>
+        <span class="arch">iphoneos-arm</span>
       </div>
       <dl>
         <div>
           <dt>Minimum iOS</dt>
-          <dd>14.5+</dd>
+          <dd>14.5</dd>
         </div>
         <div>
           <dt>TLS</dt>
@@ -259,19 +248,20 @@
       </dl>
     </section>
 
-    <section class="install" aria-labelledby="install-title">
-      <p class="label" id="install-title">Add this repository</p>
-      <div class="actions">
-        <a class="button primary" href="sileo://source/https://k1tty-xz.github.io/">Sileo</a>
-        <a class="button" href="zbra://sources/add/https://k1tty-xz.github.io/">Zebra</a>
-        <a class="button" href="cydia://url/cydia.saurik.com/api/share#?source=https://k1tty-xz.github.io/">Cydia</a>
+    <section class="section" aria-labelledby="install">
+      <p class="label" id="install">Install</p>
+      <a class="source" href="https://k1tty-xz.github.io/">https://k1tty-xz.github.io/</a>
+      <div class="links">
+        <a href="sileo://source/https://k1tty-xz.github.io/">Add to Sileo</a>
+        <a href="zbra://sources/add/https://k1tty-xz.github.io/">Add to Zebra</a>
+        <a href="cydia://url/cydia.saurik.com/api/share#?source=https://k1tty-xz.github.io/">Add to Cydia</a>
       </div>
-      <p class="url">Source URL · <code>https://k1tty-xz.github.io/</code></p>
+      <p class="note">Or add the source URL manually in your package manager.</p>
     </section>
 
     <footer>
-      <span>Maintained by <a href="https://github.com/k1tty-xz">k1tty-xz</a></span>
-      <a href="https://github.com/k1tty-xz/python-ios-arm64">View source →</a>
+      <a href="https://github.com/k1tty-xz">k1tty-xz</a>
+      <a href="https://github.com/k1tty-xz/python-ios-arm64">Build source ↗</a>
     </footer>
   </main>
 </body>
