@@ -1,17 +1,17 @@
 Origin: k1tty-xz
 Label: k1tty-xz
 Suite: stable
-Version: 3.14.7-13
+Version: 3.14.7-14
 Codename: ios
 Architectures: iphoneos-arm
 Components: main
 Description: CPython for jailbroken iOS arm64
 
 MD5Sum:
- 0260b05565b980bde6bdbc01def2da76      917 Packages
- aec9da169fd2a019f3ebd844bc554b3d      560 Packages.gz
- a311b62ffb4c4cbba83db75feb77d9bc      624 Packages.bz2
+ c2885c2b264bb51ba24df92d1af929f3      876 Packages
+ 32d6e01208d04cc37bb2e66f141a9981      537 Packages.gz
+ 9abaa51400a36bbae81119a2abdbbf3e      606 Packages.bz2
 SHA256:
- b871e131472d18e9a0c0c683fe78b8d34ed7f011c1150748f19d6a495811c0d5      917 Packages
- 84c34dfc6c9a48fcb3fa8c9bf8b71434e83bf1d6b25992460f17a3637e0cf352      560 Packages.gz
- 25c9efae8207d7f49d33c8b535132c767a7cffcf5279f8fce1b49ee6002c949c      624 Packages.bz2
+ 0b5e23767c4e48b34fafce262c898cde0a6323383d4dd5b10029c29c7ac1d12e      876 Packages
+ 81e83aaf075fb03e79671cf3c13898a13ff8109829c35ee5a0e9038855f9b4f3      537 Packages.gz
+ 1b467615557c98406f29199e0bc5b90e6cc52edbdab81e30fcb12a7300967628      606 Packages.bz2
