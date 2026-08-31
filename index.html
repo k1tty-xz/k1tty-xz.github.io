@@ -3,185 +3,276 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101312">
+  <meta name="theme-color" content="#0b0d16">
+  <meta name="description" content="CPython 3.14 for jailbroken iOS arm64 devices.">
   <link rel="icon" href="./avatar.png" type="image/png">
-  <title>k1tty-xz — CPython for iOS</title>
+  <title>CPython for iOS · k1tty-xz</title>
   <style>
     :root {
       color-scheme: dark;
-      --bg: #101312;
-      --card: #171c1a;
-      --text: #f2f5f3;
-      --muted: #aab6b0;
-      --line: #2b3530;
-      --accent: #8fe388;
-      --accent-ink: #102012;
+      --bg: #0b0d16;
+      --surface: #131725;
+      --surface-strong: #191e30;
+      --text: #f5f7ff;
+      --muted: #9aa3bb;
+      --line: #293047;
+      --violet: #a78bfa;
+      --cyan: #67e8f9;
     }
 
     * { box-sizing: border-box; }
 
     body {
-      margin: 0;
       min-height: 100vh;
+      margin: 0;
+      padding: 24px;
       display: grid;
       place-items: center;
-      padding: 24px;
-      background: var(--bg);
+      overflow-x: hidden;
+      background:
+        radial-gradient(circle at 15% 10%, #312e81 0, transparent 34%),
+        radial-gradient(circle at 85% 90%, #164e63 0, transparent 30%),
+        var(--bg);
       color: var(--text);
-      font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font: 16px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    main {
-      width: min(100%, 680px);
-      padding: clamp(28px, 6vw, 56px);
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      box-shadow: 0 24px 80px #0005;
+    .shell {
+      width: min(100%, 620px);
+      padding: clamp(28px, 6vw, 52px);
+      background: #111522cc;
+      border: 1px solid #ffffff16;
+      border-radius: 28px;
+      box-shadow: 0 28px 90px #0008;
+      backdrop-filter: blur(18px);
     }
 
     .avatar {
+      width: 72px;
+      height: 72px;
       display: block;
-      width: 88px;
-      height: 88px;
-      margin-bottom: 28px;
-      border: 2px solid var(--accent);
-      border-radius: 50%;
+      margin-bottom: 26px;
+      padding: 3px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, var(--violet), var(--cyan));
       object-fit: cover;
+      object-position: center;
     }
 
-    .eyebrow {
-      margin: 0 0 8px;
-      color: var(--accent);
-      font-size: .8rem;
-      font-weight: 700;
-      letter-spacing: .12em;
+    .eyebrow,
+    .label {
+      margin: 0;
+      color: var(--cyan);
+      font-size: .74rem;
+      font-weight: 750;
+      letter-spacing: .14em;
       text-transform: uppercase;
     }
 
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .eyebrow::before {
+      width: 7px;
+      height: 7px;
+      content: "";
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 14px var(--cyan);
+    }
+
     h1 {
-      max-width: 540px;
-      margin: 0;
-      font-size: clamp(2rem, 6vw, 3.5rem);
-      line-height: 1.05;
-      letter-spacing: -.04em;
+      max-width: 500px;
+      margin: 12px 0 16px;
+      font-size: clamp(2.6rem, 8vw, 4.5rem);
+      line-height: .98;
+      letter-spacing: -.065em;
     }
 
     .intro {
-      max-width: 560px;
-      margin: 20px 0 0;
+      max-width: 500px;
+      margin: 0;
       color: var(--muted);
-      font-size: 1.1rem;
+      font-size: 1.08rem;
     }
 
-    .details {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1px;
-      margin: 32px 0;
-      overflow: hidden;
-      background: var(--line);
+    .package {
+      margin-top: 36px;
+      padding: 20px;
+      background: #ffffff08;
       border: 1px solid var(--line);
-      border-radius: 12px;
+      border-radius: 18px;
     }
 
-    .detail {
-      padding: 14px 16px;
-      background: var(--card);
+    .package-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 16px;
     }
 
-    .detail span {
-      display: block;
+    .package h2 {
+      margin: 5px 0 0;
+      font-size: 1.25rem;
+      letter-spacing: -.02em;
+    }
+
+    .tag {
+      padding: 5px 9px;
+      border: 1px solid #a78bfa55;
+      border-radius: 999px;
+      color: var(--violet);
+      font-size: .76rem;
+      white-space: nowrap;
+    }
+
+    dl {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin: 22px 0 0;
+    }
+
+    dt {
       color: var(--muted);
-      font-size: .82rem;
+      font-size: .78rem;
     }
 
-    .detail strong { font-size: 1rem; }
+    dd {
+      margin: 3px 0 0;
+      font-weight: 650;
+    }
+
+    .install {
+      margin-top: 30px;
+    }
 
     .actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 9px;
+      margin-top: 14px;
     }
 
-    a.button {
+    a {
+      color: inherit;
+    }
+
+    .button {
+      min-height: 43px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 44px;
-      padding: 8px 16px;
+      padding: 8px 14px;
       border: 1px solid var(--line);
-      border-radius: 10px;
+      border-radius: 11px;
       color: var(--text);
       text-decoration: none;
+      font-size: .92rem;
       font-weight: 650;
+      transition: border-color .2s, transform .2s, background .2s;
     }
 
-    a.button:hover { border-color: var(--accent); }
-
-    a.primary {
-      border-color: var(--accent);
-      background: var(--accent);
-      color: var(--accent-ink);
+    .button:hover {
+      border-color: var(--violet);
+      background: #ffffff08;
+      transform: translateY(-1px);
     }
 
-    .source {
-      display: inline-block;
-      margin-top: 28px;
+    .button.primary {
+      border-color: transparent;
+      background: linear-gradient(135deg, var(--violet), var(--cyan));
+      color: #0b0d16;
+    }
+
+    .url {
+      margin: 18px 0 0;
       color: var(--muted);
-      text-decoration: underline;
-      text-underline-offset: 3px;
+      font-size: .84rem;
+    }
+
+    code {
+      color: var(--text);
+      overflow-wrap: anywhere;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
     }
 
     footer {
-      margin-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      margin-top: 34px;
       color: var(--muted);
-      font-size: .85rem;
+      font-size: .8rem;
     }
 
-    @media (max-width: 420px) {
-      .details { grid-template-columns: 1fr; }
-      a.button { width: 100%; }
+    footer a {
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: var(--text);
+    }
+
+    @media (max-width: 480px) {
+      .shell { border-radius: 22px; }
+      dl { grid-template-columns: repeat(2, 1fr); }
+      .button { flex: 1 1 130px; }
+      footer { flex-direction: column; }
     }
   </style>
 </head>
 <body>
-  <main>
+  <main class="shell">
     <img class="avatar" src="./avatar.png" alt="k1tty-xz profile picture">
     <p class="eyebrow">k1tty-xz · iOS repository</p>
-    <h1>CPython for jailbroken iOS.</h1>
+    <h1>Python, built for iOS.</h1>
     <p class="intro">
-      A native arm64 CPython runtime for iOS 14.5 and newer, packaged for
-      Sileo, Zebra, and Cydia.
+      A native CPython runtime for jailbroken arm64 devices. Small,
+      current, and ready to install.
     </p>
 
-    <section class="details" aria-label="Package details">
-      <div class="detail">
-        <span>Current build</span>
-        <strong>Python 3.14.7-10</strong>
+    <section class="package" aria-labelledby="package-title">
+      <div class="package-head">
+        <div>
+          <p class="label">Latest package</p>
+          <h2 id="package-title">Python 3.14.7-10</h2>
+        </div>
+        <span class="tag">iphoneos-arm</span>
       </div>
-      <div class="detail">
-        <span>Architecture</span>
-        <strong>iphoneos-arm</strong>
-      </div>
-      <div class="detail">
-        <span>Minimum iOS</span>
-        <strong>14.5</strong>
-      </div>
-      <div class="detail">
-        <span>TLS</span>
-        <strong>OpenSSL 3.6.4</strong>
-      </div>
+      <dl>
+        <div>
+          <dt>Minimum iOS</dt>
+          <dd>14.5+</dd>
+        </div>
+        <div>
+          <dt>TLS</dt>
+          <dd>OpenSSL 3.6.4</dd>
+        </div>
+        <div>
+          <dt>Format</dt>
+          <dd>Debian .deb</dd>
+        </div>
+      </dl>
     </section>
 
-    <div class="actions">
-      <a class="button primary" href="sileo://source/https://k1tty-xz.github.io/">Add to Sileo</a>
-      <a class="button" href="zbra://sources/add/https://k1tty-xz.github.io/">Add to Zebra</a>
-      <a class="button" href="cydia://url/cydia.saurik.com/api/share#?source=https://k1tty-xz.github.io/">Add to Cydia</a>
-    </div>
+    <section class="install" aria-labelledby="install-title">
+      <p class="label" id="install-title">Add this repository</p>
+      <div class="actions">
+        <a class="button primary" href="sileo://source/https://k1tty-xz.github.io/">Sileo</a>
+        <a class="button" href="zbra://sources/add/https://k1tty-xz.github.io/">Zebra</a>
+        <a class="button" href="cydia://url/cydia.saurik.com/api/share#?source=https://k1tty-xz.github.io/">Cydia</a>
+      </div>
+      <p class="url">Source URL · <code>https://k1tty-xz.github.io/</code></p>
+    </section>
 
-    <a class="source" href="https://github.com/k1tty-xz/python-ios-arm64">View the build source on GitHub →</a>
-    <footer>Maintained by <a href="https://github.com/k1tty-xz" style="color: inherit;">k1tty-xz</a>.</footer>
+    <footer>
+      <span>Maintained by <a href="https://github.com/k1tty-xz">k1tty-xz</a></span>
+      <a href="https://github.com/k1tty-xz/python-ios-arm64">View source →</a>
+    </footer>
   </main>
 </body>
 </html>
