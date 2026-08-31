@@ -1,16 +1,16 @@
 Package: com.k1tty-xz.python3
-Version: 3.14.7-13
+Version: 3.14.7-14
 Architecture: iphoneos-arm
 Maintainer: k1tty-xz
-Installed-Size: 77504
+Installed-Size: 84120
 Depends: firmware (>= 14.5)
 Conflicts: python3, org.coolstar.python3, com.bingner.python3
 Replaces: python3, org.coolstar.python3, com.bingner.python3
-Filename: debs/python3.14_3.14.7-13_iphoneos-arm.deb
-Size: 12684852
-MD5sum: 41a2dc9e60281ee95d0c2bf9a19dd50a
-SHA1: afc6131c22c7bb031aa586a70887efbc7509aca5
-SHA256: 45e85a0cd99a51b3e3b7ee85c436095c54ba9e521cf60d8aaf63b88279a7abcd
+Filename: debs/python3.14_3.14.7-14_iphoneos-arm.deb
+Size: 13793896
+MD5sum: ce813837db0744a4a66633a1901e226f
+SHA1: b8e3953dc4cdd9bd7bb9433fb1a33c7a6651964b
+SHA256: a484ae496a54c261f4bb4b60ab05efee81c2bcaf1cbba709a0f0437e31c59b3f
 Section: Development
 Priority: optional
 Description: The Python 3.14 interpreter for iOS.
@@ -19,8 +19,6 @@ Description: The Python 3.14 interpreter for iOS.
   * The Python 3.14 interpreter (python3, python3.14)
   * Standard library with SSL support (OpenSSL 3.6.4)
   * ctypes FFI for loading dynamic libraries
- .
- Note: pip is NOT installed by default. To install it, run:
-   python3 -m ensurepip
+  * pip with pip, pip3, and pip3.14 launchers
 Name: Python 3.14
 
