@@ -1,24 +1,29 @@
 Package: com.k1tty-xz.python3
-Version: 3.14.7-15
+Version: 3.14.7-16
 Architecture: iphoneos-arm
 Maintainer: k1tty-xz
 Installed-Size: 84120
 Depends: firmware (>= 14.5)
 Conflicts: python3, org.coolstar.python3, com.bingner.python3
 Replaces: python3, org.coolstar.python3, com.bingner.python3
-Filename: debs/python3.14_3.14.7-15_iphoneos-arm.deb
-Size: 13790948
-MD5sum: adb2530086fd95bfd48b86975d5d6c14
-SHA1: f35e892bb6850f5894fc4117e2bf551e9dcc2860
-SHA256: e07b9df085b7ce345144069ecad3c8fa252b5db8ddb673c944c64f5ddc7da87a
+Filename: debs/python3.14_3.14.7-16_iphoneos-arm.deb
+Size: 13791236
+MD5sum: f2c9928406998a3e7471ee0dcaa44299
+SHA1: 27eb23ecd1b9fbaa7c876940e242972519ac5627
+SHA256: bdb9afb2f5b0bf1c75b303ae43aa2c1e65ee410389e7cc2dcc2435e917ebe208
 Section: Development
 Priority: optional
-Description: The Python 3.14 interpreter for iOS.
- This package provides a full Python 3.14 environment, including:
+Description: Python 3.14 runtime for jailbroken iOS
+ A complete Python 3.14 runtime for arm64 jailbroken iOS devices.
  .
-  * The Python 3.14 interpreter (python3, python3.14)
-  * Standard library with SSL support (OpenSSL 3.6.4)
-  * ctypes FFI for loading dynamic libraries
-  * pip with pip, pip3, and pip3.14 launchers
+ Run Python directly from the command line with the standard library,
+ HTTPS/TLS support through OpenSSL, ctypes support through libffi, and pip
+ for installing compatible Python wheels.
+ .
+ Installed commands:
+  * python3 and python3.14
+  * pip, pip3, and pip3.14
+ .
+ Requires iOS 14.5 or later.
 Name: Python 3.14
 
