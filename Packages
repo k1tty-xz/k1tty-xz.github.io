@@ -1,20 +1,22 @@
-Package: python3.14
-Version: 3.14.7-1
-Architecture: iphoneos-arm
+Package: python3-ios-rootful
+Version: 3.14.7
+Architecture: iphoneos-arm64
 Maintainer: k1tty-xz
-Depends: ca-certificates
-Filename: debs/python3.14_3.14.7-1_iphoneos-arm.deb
-Size: 29347052
-MD5sum: 9e70a9536ee6bdab46bd9710d347afee
-SHA1: 9c4824757831076487c8a0d45ec3e8c3fbbba858
-SHA256: b1140d3142a7f239126cc6c94c37c564604814f1e6179eed6255a0f230680e7c
-Section: Development
-Priority: optional
-Description: Python 3.14 for iOS (arm64)
- A CPython 3.14 framework build for physical arm64 iOS devices.
- .
- The package preserves CPython's official iOS framework layout for use on a
- jailbroken device. Applications distributed through the App Store should
- embed and sign the framework in Xcode.
-Name: Python 3.14
+Filename: debs/python3-ios-rootful_3.14.7_iphoneos-arm64.deb
+Size: 48407564
+MD5sum: 0a501da1b7aac07af9616c8811b2e392
+SHA1: de471859aad3c7a94012dedec1764c74bd7b9b5a
+SHA256: 707f0cb124f487c4b467465839779eecb4fd5164cd0c68fc120efbcaa720f105
+Description: CPython for iOS
+
+Package: python3-ios-rootless
+Version: 3.14.7
+Architecture: iphoneos-arm64
+Maintainer: k1tty-xz
+Filename: debs/python3-ios-rootless_3.14.7_iphoneos-arm64.deb
+Size: 48417494
+MD5sum: 9b1062a053e01d34cad8b34469822947
+SHA1: 56eb192bfd5c6640bcb52b0a73866e37912c9ad1
+SHA256: 6e1269435f776ef37e00e6f8534923c29bb21f32d575309384871fb1606979a2
+Description: CPython for iOS
 
