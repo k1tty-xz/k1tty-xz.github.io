@@ -14,7 +14,6 @@ jobs:
     env:
       SOURCE_REPO: k1tty-xz/python-ios
       PACKAGE_VERSION: 3.14.7
-      PACKAGE_ARCH: iphoneos-arm64
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
@@ -28,7 +27,11 @@ jobs:
           trap 'rm -rf "${staging}"' EXIT
 
           for layout in rootful rootless; do
-            artifact_name="python3-ios-${layout}_${PACKAGE_VERSION}_${PACKAGE_ARCH}.deb"
+            case "${layout}" in
+              rootful) package_arch=iphoneos-arm ;;
+              rootless) package_arch=iphoneos-arm64 ;;
+            esac
+            artifact_name="python3-ios-${layout}_${PACKAGE_VERSION}_${package_arch}.deb"
             artifact_id="$(curl --fail-with-body -sS \
               -H "Accept: application/vnd.github+json" \
               -H "Authorization: Bearer ${GH_TOKEN}" \
@@ -47,8 +50,9 @@ jobs:
               "https://api.github.com/repos/${SOURCE_REPO}/actions/artifacts/${artifact_id}/zip"
 
             test "$(dpkg-deb --field "${package_path}" Package)" = "python3-ios-${layout}"
+            test "$(dpkg-deb --field "${package_path}" Name)" = "Python 3.14"
             test "$(dpkg-deb --field "${package_path}" Version)" = "${PACKAGE_VERSION}"
-            test "$(dpkg-deb --field "${package_path}" Architecture)" = "${PACKAGE_ARCH}"
+            test "$(dpkg-deb --field "${package_path}" Architecture)" = "${package_arch}"
           done
 
           rm -f debs/*.deb
@@ -68,7 +72,7 @@ jobs:
               "Suite: stable" \
               "Version: ${PACKAGE_VERSION}" \
               "Codename: ios" \
-              "Architectures: ${PACKAGE_ARCH}" \
+              "Architectures: iphoneos-arm iphoneos-arm64" \
               "Components: main" \
               "Description: Standalone CPython for iOS" \
               "" \
