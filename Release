@@ -8,10 +8,10 @@ Components: main
 Description: Standalone CPython for iOS
 
 MD5Sum:
- a8fcb15b1894743952e99f1b4e8e7e2c      889 Packages
- b7dad8df1f2e5f5186f54a698990ae9c      448 Packages.gz
- 0cfd553c292239273e308aac7094fcb5      523 Packages.bz2
+ 011d1c74c1f9af0bdbbd9cf44e36f8cb      889 Packages
+ 4e2b097e5f1a714bd8aaaee59c9fa42d      453 Packages.gz
+ ecae40614d730834ea63cd27b5ecbeff      527 Packages.bz2
 SHA256:
- 739708cb163e025daa45d77315c9f1caaa31e6d9e240d62165fc367780d0bfd8      889 Packages
- 637f7bff9166a6491fdd900f96ab792c656e9c7b689bcfa251342664bf4336fb      448 Packages.gz
- 75a802574e649129fb1a5408db637ed8c52a52e1caf05100c54d574f6f25e4f8      523 Packages.bz2
+ b0e586f16ffe48877e4e535d982724b1c61c291e2304258bffb4e602a55cc1d4      889 Packages
+ 108b716151cb808292eda7fe6f6e0a3f447d413bcda2bce738de4ee8053e7fae      453 Packages.gz
+ 9b5935164a9fab3e8595ce0f7e33bffbc03939bcdad692d7d94b1e3cd8f6ea05      527 Packages.bz2
