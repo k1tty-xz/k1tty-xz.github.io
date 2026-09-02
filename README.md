@@ -1,6 +1,6 @@
 # Python for iOS
 
-A Debian repository of signed, standalone CPython for jailbroken iOS.
+A Debian repository of signed, standalone CPython for jailbroken iOS terminals.
 
 Add the source URL to your package manager:
 
