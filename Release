@@ -1,17 +1,17 @@
 Origin: k1tty-xz
 Label: k1tty-xz
 Suite: stable
-Version: 3.14.7
+Version: 3.14.7-1
 Codename: ios
 Architectures: iphoneos-arm iphoneos-arm64
 Components: main
 Description: Standalone CPython for iOS
 
 MD5Sum:
- 408079ee75d243dbd15ca9949efbe9b6      881 Packages
- 393f808bbb94ba2ea881b49d712e03cb      449 Packages.gz
- 385036ab2ccad49bfcdcbca6008e331f      525 Packages.bz2
+ a8fcb15b1894743952e99f1b4e8e7e2c      889 Packages
+ b7dad8df1f2e5f5186f54a698990ae9c      448 Packages.gz
+ 0cfd553c292239273e308aac7094fcb5      523 Packages.bz2
 SHA256:
- 6a833d767a60b96912bc06456dbc5bcbc4bb0eefb0ab45f5a24378a20c1a0b09      881 Packages
- 35bcc0006d2716e8068eec66c70a33bacea1f5aa5b7a5128cb67422fbd67bcb8      449 Packages.gz
- 6395bf064a397f14a4eaf3ac4a6ec10081a9d985409fe22dc2d543d878b4b98b      525 Packages.bz2
+ 739708cb163e025daa45d77315c9f1caaa31e6d9e240d62165fc367780d0bfd8      889 Packages
+ 637f7bff9166a6491fdd900f96ab792c656e9c7b689bcfa251342664bf4336fb      448 Packages.gz
+ 75a802574e649129fb1a5408db637ed8c52a52e1caf05100c54d574f6f25e4f8      523 Packages.bz2
