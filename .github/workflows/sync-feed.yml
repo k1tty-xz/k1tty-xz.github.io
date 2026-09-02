@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SOURCE_REPO: k1tty-xz/python-ios
-      PACKAGE_VERSION: 3.14.7
+      PACKAGE_VERSION: 3.14.7-1
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
