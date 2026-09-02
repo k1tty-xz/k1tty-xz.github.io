@@ -2,13 +2,13 @@
 
 A Debian repository for standalone CPython on jailbroken iOS.
 
-Add the source URL to Sileo, Zebra, or Cydia:
+Add the source URL to your package manager:
 
 `https://k1tty-xz.github.io/`
 
-Choose the package that matches the device layout:
+Both packages are displayed as **Python 3.14**. Choose the package matching the device:
 
-- `python3-ios-rootful` installs under `/usr/local`.
-- `python3-ios-rootless` installs under `/var/jb/usr/local`.
+- Rootful (unc0ver and similar): `iphoneos-arm`, installs under `/usr/local`.
+- Rootless: `iphoneos-arm64`, installs under `/var/jb/usr/local`.
 
 Build source: [k1tty-xz/python-ios](https://github.com/k1tty-xz/python-ios).
