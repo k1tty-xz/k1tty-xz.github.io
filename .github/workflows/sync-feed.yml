@@ -1,121 +1,103 @@
-name: Sync CPython package feed
+name: Publish latest CPython package
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     paths:
       - .github/workflows/sync-feed.yml
-  workflow_dispatch:
 
 permissions:
-  actions: read
   contents: write
 
 env:
   SOURCE_REPO: k1tty-xz/python-ios
-  PACKAGE_NAME: python3.14
-  PACKAGE_VERSION: 3.14.7-7
-  PACKAGE_ARCH: iphoneos-arm
-  ARTIFACT_NAME: python3.14_3.14.7-7_iphoneos-arm_rootful.deb
+  ARTIFACT_PATTERN: ^python3\.14_.+_iphoneos-arm_rootful\.deb$
 
 jobs:
-  sync:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
-        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Download and verify rootful package
+      - name: Download latest package
         env:
           GH_TOKEN: ${{ github.token }}
-        shell: bash
         run: |
           set -euo pipefail
+          work="$(mktemp -d)"
+          trap 'rm -rf "$work"' EXIT
 
-          staging="$(mktemp -d)"
-          trap 'rm -rf "${staging}"' EXIT
-          archive="${staging}/artifact"
-          extracted="${staging}/extracted"
-          mkdir "${extracted}"
-
-          artifact_json="$(curl --fail-with-body -sS \
+          artifact="$(curl -fsSL \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${GH_TOKEN}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            "https://api.github.com/repos/${SOURCE_REPO}/actions/artifacts?per_page=100")"
-          artifact_id="$(jq -er --arg name "${ARTIFACT_NAME}" '
-            [.artifacts[] | select(.name == $name and .expired == false)]
-            | sort_by(.updated_at) | last | .id' <<<"${artifact_json}")"
-          expected_digest="$(jq -er --arg name "${ARTIFACT_NAME}" '
-            [.artifacts[] | select(.name == $name and .expired == false)]
-            | sort_by(.updated_at) | last | .digest' <<<"${artifact_json}")"
+            "https://api.github.com/repos/${SOURCE_REPO}/actions/artifacts?per_page=100" \
+            | jq -cer --arg pattern "$ARTIFACT_PATTERN" \
+              '[.artifacts[] | select(.expired == false and (.name | test($pattern)))]
+               | sort_by(.updated_at) | last')"
 
-          curl --fail-with-body -sS -L \
+          artifact_id="$(jq -r .id <<<"$artifact")"
+          deb_name="$(jq -r .name <<<"$artifact")"
+          expected_digest="$(jq -r .digest <<<"$artifact")"
+          package="$work/$deb_name"
+
+          curl -fsSL \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${GH_TOKEN}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            -o "${archive}" \
+            -o "$package" \
             "https://api.github.com/repos/${SOURCE_REPO}/actions/artifacts/${artifact_id}/zip"
 
-          test "${expected_digest}" = "sha256:$(sha256sum "${archive}" | cut -d ' ' -f 1)"
-          package_path="${archive}"
-          if file --brief "${archive}" | grep -q 'Zip archive data'; then
-            unzip -q "${archive}" -d "${extracted}"
-            package_path="$(find "${extracted}" -type f -name '*.deb' -print -quit)"
-          fi
-          test -n "${package_path}"
-          test -s "${package_path}"
-          test "$(dpkg-deb --field "${package_path}" Package)" = "${PACKAGE_NAME}"
-          test "$(dpkg-deb --field "${package_path}" Version)" = "${PACKAGE_VERSION}"
-          test "$(dpkg-deb --field "${package_path}" Architecture)" = "${PACKAGE_ARCH}"
+          test "$expected_digest" = "sha256:$(sha256sum "$package" | cut -d ' ' -f 1)"
+          test "$(dpkg-deb --field "$package" Package)" = python3.14
+          test "$(dpkg-deb --field "$package" Architecture)" = iphoneos-arm
+          package_version="$(dpkg-deb --field "$package" Version)"
 
           rm -f debs/*.deb
-          install -m 0644 "${package_path}" "debs/${ARTIFACT_NAME}"
-          dpkg-deb --info "debs/${ARTIFACT_NAME}"
+          install -m 0644 "$package" "debs/$deb_name"
+          printf 'DEB_NAME=%s\nPACKAGE_VERSION=%s\n' \
+            "$deb_name" "$package_version" >> "$GITHUB_ENV"
 
-      - name: Rebuild repository metadata
-        shell: bash
+      - name: Rebuild feed metadata
         run: |
           set -euo pipefail
-
           dpkg-scanpackages -m debs /dev/null > Packages
           gzip -9 -n -c Packages > Packages.gz
           bzip2 -9 -c Packages > Packages.bz2
 
           {
             printf '%s\n' \
-              "Origin: k1tty-xz" \
-              "Label: k1tty-xz" \
-              "Suite: stable" \
-              "Version: ${PACKAGE_VERSION}" \
-              "Codename: ios" \
-              "Architectures: ${PACKAGE_ARCH}" \
-              "Components: main" \
-              "Description: Standalone CPython for iOS" \
-              "" \
-              "MD5Sum:"
+              'Origin: k1tty-xz' \
+              'Label: k1tty-xz' \
+              'Suite: stable' \
+              "Version: $PACKAGE_VERSION" \
+              'Codename: ios' \
+              'Architectures: iphoneos-arm' \
+              'Components: main' \
+              'Description: Standalone CPython for iOS' \
+              '' \
+              'MD5Sum:'
             for file in Packages Packages.gz Packages.bz2; do
-              printf ' %s %16s %s\n' "$(md5sum "${file}" | cut -d ' ' -f 1)" "$(stat -c '%s' "${file}")" "${file}"
+              printf ' %s %16s %s\n' \
+                "$(md5sum "$file" | cut -d ' ' -f 1)" "$(stat -c '%s' "$file")" "$file"
             done
-            printf '%s\n' "SHA256:"
+            printf '%s\n' 'SHA256:'
             for file in Packages Packages.gz Packages.bz2; do
-              printf ' %s %16s %s\n' "$(sha256sum "${file}" | cut -d ' ' -f 1)" "$(stat -c '%s' "${file}")" "${file}"
+              printf ' %s %16s %s\n' \
+                "$(sha256sum "$file" | cut -d ' ' -f 1)" "$(stat -c '%s' "$file")" "$file"
             done
           } > Release
 
           git diff --check
 
-      - name: Publish changes
-        shell: bash
+      - name: Publish
         run: |
           set -euo pipefail
-
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add Packages Packages.gz Packages.bz2 Release debs
-          if git diff --cached --quiet; then
-            echo 'Repository is already current.'
-            exit 0
-          fi
-          git commit -m "Sync CPython ${PACKAGE_VERSION} rootful package"
+          git diff --cached --quiet && exit 0
+          git commit -m "Publish CPython $PACKAGE_VERSION"
           git push
