@@ -3,10 +3,10 @@ Version: 3.14.7-2
 Architecture: iphoneos-arm
 Maintainer: k1tty-xz
 Filename: debs/python3-ios-rootful_3.14.7-2_iphoneos-arm.deb
-Size: 50156544
-MD5sum: f57f36d3b9fc2c81a0e0cbc1d9515c7c
-SHA1: d369f6112bb598642e251ccfa66a3a4b3935da71
-SHA256: 256e428b5c382d868dd6395c8763dcace503f9196b276d95449a817db8d2357d
+Size: 50155742
+MD5sum: 105ef4d72c46d86dea479a8f46b992a0
+SHA1: 8bbbdd30bc5f126fd06f5637801f602faf9034bf
+SHA256: 62e3e75cffcc6cb0f92dce1775c666938d2c722262311b630e2f4a85ad6c419c
 Section: Development
 Description: Standalone CPython 3.14.7 for jailbroken iOS (rootful).
 Name: Python 3.14
@@ -16,10 +16,10 @@ Version: 3.14.7-2
 Architecture: iphoneos-arm64
 Maintainer: k1tty-xz
 Filename: debs/python3-ios-rootless_3.14.7-2_iphoneos-arm64.deb
-Size: 50164926
-MD5sum: 50c0262837ba4d85d04c3d4f64cd7dd7
-SHA1: 7fb95120d9accccfe32faf550bd9c16e49f477b2
-SHA256: 3799f05480238067bbcbf1027bf2d7d2baffd83cc400769c5f0497773dbcc74b
+Size: 50166360
+MD5sum: 60b7924627e5e2c5b7c8045fef95e077
+SHA1: f6fbb6e6c1edefaa16c0971e61abde52b85cd260
+SHA256: 815c418842740d25a8b3ee7b13722559d14092cd5251a1d730e959476bd09298
 Section: Development
 Description: Standalone CPython 3.14.7 for jailbroken iOS (rootless).
 Name: Python 3.14
