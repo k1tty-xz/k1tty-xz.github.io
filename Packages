@@ -12,3 +12,18 @@ Section: Development
 Priority: optional
 Description: CPython 3.14.7 for rootful jailbroken iOS
 
+Package: python3.14-frida
+Version: 17.17.0-1
+Architecture: iphoneos-arm64
+Maintainer: k1tty-xz <187893856+k1tty-xz@users.noreply.github.com>
+Installed-Size: 22492
+Depends: python3.14
+Filename: debs/python3.14-frida_17.17.0-1_iphoneos-arm64.deb
+Size: 3997340
+MD5sum: 8dc77fcc4d7e342b63f190701eaac310
+SHA1: 91e0ae01618dfce0c09bb59f466bdde7fdd9b856
+SHA256: 8c57b4728d60294a1c50bb32c02daacc2d59edaffa432c904f5b80183371243f
+Section: Python
+Priority: optional
+Description: Frida Python bindings for CPython 3.14 on jailbroken iOS
+
