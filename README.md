@@ -19,6 +19,11 @@ dpkg -i ./python3.14_3.14.7-2_iphoneos-arm_rootful.deb
 
 ## Coming later
 
+## Known iOS limitations
+
+- CPython disables process spawning on iOS, so `subprocess` is unavailable.
+- This build has no native `readline` extension; the REPL uses CPython's fallback.
+
 Rootless support remains deferred until it can be tested on a jailbroken device.
 pip support is also deferred until it can be verified.
 
