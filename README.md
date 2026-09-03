@@ -6,26 +6,24 @@ CPython's official iOS toolchain.
 ## Current package
 
 - Rootful: `iphoneos-arm`, installed under `/usr`
-- Version: `3.14.7-2`
+- Version: `3.14.7-3`
 - Console launcher: standard terminal input and output (verified on rootful device)
+- Subprocess: CPython's official `_posixsubprocess` path is included; device test pending
 - Build: [GitHub Actions](https://github.com/k1tty-xz/python-ios/actions/workflows/build.yml)
 
 Install the downloaded package with:
 
 ```sh
-dpkg -i ./python3.14_3.14.7-2_iphoneos-arm_rootful.deb
+dpkg -i ./python3.14_3.14.7-3_iphoneos-arm_rootful.deb
 /usr/bin/python3.14 --version
 ```
 
-## Coming later
+## Notes
 
-## Known iOS limitations
-
-- CPython disables process spawning on iOS, so `subprocess` is unavailable.
+- The subprocess enablement is for jailbroken iOS only and is not supported on stock iOS.
 - This build has no native `readline` extension; the REPL uses CPython's fallback.
-
-Rootless support remains deferred until it can be tested on a jailbroken device.
-pip support is also deferred until it can be verified.
+- Rootless support remains deferred until it can be tested on a jailbroken device.
+- pip support remains deferred until it can be verified.
 
 Package source: [k1tty-xz/python-ios](https://github.com/k1tty-xz/python-ios).
 
