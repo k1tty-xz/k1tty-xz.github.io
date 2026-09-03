@@ -1,0 +1,86 @@
+name: Publish rootful Debian package
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/publish-rootful.yml
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out package repository
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      - name: Download verified package
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
+        with:
+          github-token: ${{ github.token }}
+          repository: k1tty-xz/python-ios
+          run-id: 33777486528
+          name: python3.14_3.14.7-1_iphoneos-arm_rootful.deb
+          path: debs
+
+      - name: Rebuild repository indexes
+        shell: bash
+        run: |
+          set -euo pipefail
+          package=python3.14_3.14.7-1_iphoneos-arm_rootful.deb
+          deb="debs/${package}"
+          test -s "${deb}"
+          file "${deb}"
+          dpkg-deb --info "${deb}"
+          rm -f debs/python3-ios-rootful_3.14.7-2_iphoneos-arm.deb debs/python3-ios-rootless_3.14.7-2_iphoneos-arm64.deb
+          dpkg-scanpackages debs /dev/null > Packages
+          gzip --no-name --force --stdout Packages > Packages.gz
+          bzip2 --best --force --stdout Packages > Packages.bz2
+          packages_size=$(wc -c < Packages | tr -d ' ')
+          packages_gz_size=$(wc -c < Packages.gz | tr -d ' ')
+          packages_bz2_size=$(wc -c < Packages.bz2 | tr -d ' ')
+          packages_md5=$(md5sum Packages | cut -d ' ' -f 1)
+          packages_gz_md5=$(md5sum Packages.gz | cut -d ' ' -f 1)
+          packages_bz2_md5=$(md5sum Packages.bz2 | cut -d ' ' -f 1)
+          packages_sha256=$(sha256sum Packages | cut -d ' ' -f 1)
+          packages_gz_sha256=$(sha256sum Packages.gz | cut -d ' ' -f 1)
+          packages_bz2_sha256=$(sha256sum Packages.bz2 | cut -d ' ' -f 1)
+          {
+            echo 'Origin: k1tty-xz'
+            echo 'Label: k1tty-xz'
+            echo 'Suite: stable'
+            echo 'Version: 3.14.7-1'
+            echo 'Codename: ios'
+            echo 'Architectures: iphoneos-arm'
+            echo 'Components: main'
+            echo 'Description: Standalone CPython for iOS'
+            echo
+            echo 'MD5Sum:'
+            printf ' %s %16s Packages\n' "${packages_md5}" "${packages_size}"
+            printf ' %s %16s Packages.gz\n' "${packages_gz_md5}" "${packages_gz_size}"
+            printf ' %s %16s Packages.bz2\n' "${packages_bz2_md5}" "${packages_bz2_size}"
+            echo 'SHA256:'
+            printf ' %s %16s Packages\n' "${packages_sha256}" "${packages_size}"
+            printf ' %s %16s Packages.gz\n' "${packages_gz_sha256}" "${packages_gz_size}"
+            printf ' %s %16s Packages.bz2\n' "${packages_bz2_sha256}" "${packages_bz2_size}"
+          } > Release
+          git diff --check
+          sha256sum "${deb}"
+
+      - name: Commit package repository
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f .github/workflows/publish-rootful.yml
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A
+          if git diff --cached --quiet; then
+            echo 'No package repository changes to commit.'
+            exit 0
+          fi
+          git commit -m 'Publish CPython 3.14.7-1 rootful package'
+          git push
