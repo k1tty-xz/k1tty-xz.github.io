@@ -1,32 +1,26 @@
-# Python 3.14 for jailbroken iOS
+# CPython 3.14 for jailbroken iOS
 
-System-wide CPython 3.14 for rootful jailbroken iOS devices, built with
-CPython's official iOS toolchain.
+Package repository for the rootful CPython build from
+[k1tty-xz/python-ios](https://github.com/k1tty-xz/python-ios).
 
 ## Current package
 
-- Rootful: `iphoneos-arm`, installed under `/usr`
-- Version: `3.14.7-7`
-- Console launcher: standard terminal input and output (verified on rootful device)
-- Subprocess: CPython's official `_posixsubprocess` path is verified on-device
-- Build: [GitHub Actions](https://github.com/k1tty-xz/python-ios/actions/workflows/build.yml)
+- Version: `3.14.7-8`
+- Architecture: `iphoneos-arm`
+- Prefix: `/usr`
+- Target: arm64 and arm64e jailbroken iOS devices
+- Includes the standard library, subprocess support, and pip
 
-Install the downloaded package with:
+The build and feed checks passed. This revision awaits a rootful device
+regression test.
 
-```sh
-dpkg -i ./python3.14_3.14.7-7_iphoneos-arm_rootful.deb
-/usr/bin/python3.14 --version
-```
+## Install
 
-## Notes
-
-- The subprocess enablement is for jailbroken iOS only and is not supported on stock iOS.
-- This build has no native `readline` extension; the REPL uses CPython's fallback.
-- Rootless support remains deferred until it can be tested on a jailbroken device.
-- pip: bundled via CPython's official `ensurepip`; installation verified on a rootful device.
-
-Package source: [k1tty-xz/python-ios](https://github.com/k1tty-xz/python-ios).
-
-Add this repository to your package manager:
+Add this source to your package manager:
 
 `https://k1tty-xz.github.io/`
+
+Then install `python3.14`. Start Python with `python3` and use pip with
+`python3 -m pip`.
+
+Rootless packaging and the optional `readline` extension are not included yet.
