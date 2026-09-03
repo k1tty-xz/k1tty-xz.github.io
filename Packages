@@ -1,13 +1,13 @@
 Package: python3.14
-Version: 3.14.7-2
+Version: 3.14.7-3
 Architecture: iphoneos-arm
 Maintainer: k1tty-xz <187893856+k1tty-xz@users.noreply.github.com>
-Installed-Size: 250736
-Filename: debs/python3.14_3.14.7-2_iphoneos-arm_rootful.deb
-Size: 27718468
-MD5sum: b763b9adf607e4cb4be1ad6d87522415
-SHA1: de0bc05b6e07489b91e663853cada3d1a1a579c9
-SHA256: 4d9b9776b3bca41cd4bcca84d772e2c64607377a06c8d57167ad4344a47a022d
+Installed-Size: 250828
+Filename: debs/python3.14_3.14.7-3_iphoneos-arm_rootful.deb
+Size: 27720860
+MD5sum: 3765b76ca520f890c1b42e5a7e8765f4
+SHA1: 8914320058d4f90d9d909ca397604a1d3bfd9d0f
+SHA256: 358ae2cffbce898d9fa145cf6dabcea7bbf23fd333cc33c8c1618b4dfc1857be
 Section: Development
 Priority: optional
 Description: CPython 3.14.7 for rootful jailbroken iOS
