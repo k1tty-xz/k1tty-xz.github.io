@@ -14,9 +14,9 @@ permissions:
 env:
   SOURCE_REPO: k1tty-xz/python-ios
   PACKAGE_NAME: python3.14
-  PACKAGE_VERSION: 3.14.7-1
+  PACKAGE_VERSION: 3.14.7-2
   PACKAGE_ARCH: iphoneos-arm
-  ARTIFACT_NAME: python3.14_3.14.7-1_iphoneos-arm_rootful.deb
+  ARTIFACT_NAME: python3.14_3.14.7-2_iphoneos-arm_rootful.deb
 
 jobs:
   sync:
