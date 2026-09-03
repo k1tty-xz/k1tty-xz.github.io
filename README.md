@@ -7,7 +7,7 @@ CPython's official iOS toolchain.
 
 - Rootful: `iphoneos-arm`, installed under `/usr`
 - Version: `3.14.7-2`
-- Console launcher: standard terminal input and output (device testing pending)
+- Console launcher: standard terminal input and output (verified on rootful device)
 - Build: [GitHub Actions](https://github.com/k1tty-xz/python-ios/actions/workflows/build.yml)
 
 Install the downloaded package with:
@@ -19,8 +19,8 @@ dpkg -i ./python3.14_3.14.7-2_iphoneos-arm_rootful.deb
 
 ## Coming later
 
-Rootless support will be added after the rootful package has been tested on a
-jailbroken device. pip support is deferred until it can be verified.
+Rootless support remains deferred until it can be tested on a jailbroken device.
+pip support is also deferred until it can be verified.
 
 Package source: [k1tty-xz/python-ios](https://github.com/k1tty-xz/python-ios).
 
