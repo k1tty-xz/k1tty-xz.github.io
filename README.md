@@ -1,4 +1,4 @@
-# Python for iOS
+# Python 3.14 for iOS
 
 Standalone CPython for jailbroken iOS terminals.
 
