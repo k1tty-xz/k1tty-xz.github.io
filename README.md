@@ -23,7 +23,7 @@ dpkg -i ./python3.14_3.14.7-7_iphoneos-arm_rootful.deb
 - The subprocess enablement is for jailbroken iOS only and is not supported on stock iOS.
 - This build has no native `readline` extension; the REPL uses CPython's fallback.
 - Rootless support remains deferred until it can be tested on a jailbroken device.
-- pip: bundled via CPython's official `ensurepip`; device test pending.
+- pip: bundled via CPython's official `ensurepip`; installation verified on a rootful device.
 
 Package source: [k1tty-xz/python-ios](https://github.com/k1tty-xz/python-ios).
 
