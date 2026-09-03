@@ -6,7 +6,7 @@ CPython's official iOS toolchain.
 ## Current package
 
 - Rootful: `iphoneos-arm`, installed under `/usr`
-- Version: `3.14.7-5`
+- Version: `3.14.7-6`
 - Console launcher: standard terminal input and output (verified on rootful device)
 - Subprocess: CPython's official `_posixsubprocess` path is verified on-device
 - Build: [GitHub Actions](https://github.com/k1tty-xz/python-ios/actions/workflows/build.yml)
@@ -14,7 +14,7 @@ CPython's official iOS toolchain.
 Install the downloaded package with:
 
 ```sh
-dpkg -i ./python3.14_3.14.7-5_iphoneos-arm_rootful.deb
+dpkg -i ./python3.14_3.14.7-6_iphoneos-arm_rootful.deb
 /usr/bin/python3.14 --version
 ```
 
