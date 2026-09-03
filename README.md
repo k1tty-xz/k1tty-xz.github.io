@@ -1,6 +1,6 @@
 # Python 3.14 for iOS
 
-Standalone CPython for jailbroken iOS terminals.
+System-wide CPython for jailbroken iOS terminals.
 
 Add the source URL to your package manager:
 
