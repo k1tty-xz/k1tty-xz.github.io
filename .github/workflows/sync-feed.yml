@@ -13,7 +13,8 @@ permissions:
 env:
   SOURCE_REPO: k1tty-xz/python-ios
   CPYTHON_ARTIFACT_PATTERN: ^python3\.14_.+_iphoneos-arm_rootful\.deb$
-  # Always publish the newest completed universal arm64/arm64e artifact.\n  FRIDA_ARTIFACT_PATTERN: ^python3\.14-frida_.+_iphoneos-arm64\.deb$
+  # Always publish the newest completed universal arm64/arm64e artifact.
+  FRIDA_ARTIFACT_PATTERN: ^python3\.14-frida_.+_iphoneos-arm64\.deb
 
 jobs:
   publish:
