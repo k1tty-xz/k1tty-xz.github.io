@@ -1,4 +1,4 @@
-name: Publish latest CPython and universal Frida packages
+name: Publish latest CPython and Frida packages
 
 on:
   workflow_dispatch:
