@@ -19,10 +19,10 @@ Maintainer: k1tty-xz <187893856+k1tty-xz@users.noreply.github.com>
 Installed-Size: 44984
 Depends: python3.14
 Filename: debs/python3.14-frida_17.17.0-1_iphoneos-arm64.deb
-Size: 8764540
-MD5sum: a9ed2b529c77b2a51f3f8daba934d77c
-SHA1: e9a76586192d48089fff3355e62485dd5c2a0b88
-SHA256: 0382264dc24cb82e560c60321e02ec0f17817fcbee9a0a5c2e167cc5d1d1d897
+Size: 8763696
+MD5sum: 45ca8d666d1a0bdae90f848ce2d1f479
+SHA1: e02f897ea945764597483c4edf88a9f2c7e498e4
+SHA256: e6e9eca73ee82055d1b0cab54dff6fedb90ceed0cf004eb8694cb044fa66dce4
 Section: Python
 Priority: optional
 Description: Frida Python bindings for CPython 3.14 on jailbroken iOS
