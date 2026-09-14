@@ -78,7 +78,7 @@ jobs:
               'Codename: ios' \
               'Architectures: iphoneos-arm' \
               'Components: main' \
-              'Description: Standalone CPython for iOS' \
+              'Description: Python 3.14.7 for jailbroken iOS' \
               '' \
               'MD5Sum:'
             for file in Packages Packages.gz Packages.bz2; do

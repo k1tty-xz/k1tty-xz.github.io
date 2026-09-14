@@ -5,7 +5,7 @@ Version: 3.14.7-1
 Codename: ios
 Architectures: iphoneos-arm
 Components: main
-Description: Standalone CPython for iOS
+Description: Python 3.14.7 for jailbroken iOS
 
 MD5Sum:
  efb4066ee555ee7ef19ecb0b8a4c920b              627 Packages
