@@ -4,10 +4,10 @@ Architecture: iphoneos-arm
 Maintainer: k1tty-xz
 Depends: firmware, ca-certificates
 Filename: debs/com.python.ios.framework_3.14.7-1_iphoneos-arm.deb
-Size: 15609920
-MD5sum: 6704fbf2f23cd47d14dcecaed68203b2
-SHA1: 468e5f4b9c6256436e84de019e01a67e5123d852
-SHA256: f7053c0c66f8d3ad486c7e43351980c2df5c8152fc2c24f7397ad3cfa3570ba4
+Size: 15618084
+MD5sum: c635b9503d603e9bcb0fc685b51f07bf
+SHA1: b4a47fabb178973d7cef5128036d8665d7b78c61
+SHA256: e920f7aa88cf75ae7046d34286b5f233e6bdbb6b18911c4aed169115b300741c
 Section: interpreters
 Priority: optional
 Homepage: https://www.python.org/
