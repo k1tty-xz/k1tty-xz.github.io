@@ -1,29 +1,18 @@
-Package: python3.14
-Version: 3.14.7-8
+Package: com.python.ios.framework
+Version: 3.14.7-1
 Architecture: iphoneos-arm
-Maintainer: k1tty-xz <187893856+k1tty-xz@users.noreply.github.com>
-Installed-Size: 264028
-Filename: debs/python3.14_3.14.7-8_iphoneos-arm_rootful.deb
-Size: 30335884
-MD5sum: 87299cebc0b678cf946cd509a261071e
-SHA1: fec2caa0194984abc208e92fd2c8fd0e0e863682
-SHA256: 384dab822e5c50d747bec9953262c580464a93a480068730cc8ffb91f5cea7a4
-Section: Development
+Maintainer: k1tty-xz
+Depends: firmware, ca-certificates
+Filename: debs/com.python.ios.framework_3.14.7-1_iphoneos-arm.deb
+Size: 15613972
+MD5sum: a669834b43f9260c03697916db4c9813
+SHA1: 9d6aa96c60cc46ec5bc89270598cdfd26da08da4
+SHA256: 3e6737f52334ac44a82a74b9428f9814d602ec951a135dbd0516782c7ec8dd85
+Section: interpreters
 Priority: optional
-Description: CPython 3.14.7 for rootful jailbroken iOS
-
-Package: python3.14-frida
-Version: 17.17.0-1
-Architecture: iphoneos-arm64
-Maintainer: k1tty-xz <187893856+k1tty-xz@users.noreply.github.com>
-Installed-Size: 44984
-Depends: python3.14
-Filename: debs/python3.14-frida_17.17.0-1_iphoneos-arm64.deb
-Size: 8755516
-MD5sum: 460a6b6c0b979db35e3dd2f7e418ac82
-SHA1: bb780a1be1d3dc8cfc1f603dcc137cc85e1d9233
-SHA256: 8e3325b1295ba18b8a0dcc63f8c37441f5eb280e446f54e798854f9201eac6e2
-Section: Python
-Priority: optional
-Description: Frida Python bindings for CPython 3.14 on jailbroken iOS
+Homepage: https://www.python.org/
+Description: CPython 3.14 framework for rootful iOS
+ An arm64 CPython runtime for rootful iOS, including Python.framework, the
+ standard library, and pip.
+Name: Python3.14.7
 

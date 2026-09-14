@@ -1,4 +1,4 @@
-name: Publish latest CPython and Frida packages
+name: Publish Python package
 
 on:
   workflow_dispatch:
@@ -12,9 +12,7 @@ permissions:
 
 env:
   SOURCE_REPO: k1tty-xz/python-ios
-  CPYTHON_ARTIFACT_PATTERN: ^python3\.14_.+_iphoneos-arm_rootful\.deb$
-  # Always publish the newest completed universal arm64/arm64e artifact.
-  FRIDA_ARTIFACT_PATTERN: ^python3\.14-frida_.+_iphoneos-arm64\.deb$
+  ARTIFACT_NAME: python-ios-framework
 
 jobs:
   publish:
@@ -31,47 +29,40 @@ jobs:
           work="$(mktemp -d)"
           trap 'rm -rf "$work"' EXIT
 
-          download_artifact() {
-            local pattern="$1"
-            local expected_package="$2"
-            local expected_arch="$3"
-            local artifact artifact_id deb_name expected_digest package
+          artifact="$(curl -fsSL \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            "https://api.github.com/repos/${SOURCE_REPO}/actions/artifacts?per_page=100" \
+            | jq -cer --arg name "$ARTIFACT_NAME" \
+              '[.artifacts[] | select(.expired == false and .name == $name)]
+               | sort_by(.updated_at) | last')"
 
-            artifact="$(curl -fsSL \
-              -H "Accept: application/vnd.github+json" \
-              -H "Authorization: Bearer ${GH_TOKEN}" \
-              -H "X-GitHub-Api-Version: 2022-11-28" \
-              "https://api.github.com/repos/${SOURCE_REPO}/actions/artifacts?per_page=100" \
-              | jq -cer --arg pattern "$pattern" \
-                '[.artifacts[] | select(.expired == false and (.name | test($pattern)))]
-                 | sort_by(.updated_at) | last')"
+          artifact_id="$(jq -r .id <<<"$artifact")"
+          expected_digest="$(jq -r .digest <<<"$artifact")"
+          archive="$work/artifact.zip"
 
-            artifact_id="$(jq -r .id <<<"$artifact")"
-            deb_name="$(jq -r .name <<<"$artifact")"
-            expected_digest="$(jq -r .digest <<<"$artifact")"
-            package="$work/$deb_name"
+          curl -fsSL \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            -o "$archive" \
+            "https://api.github.com/repos/${SOURCE_REPO}/actions/artifacts/${artifact_id}/zip"
 
-            curl -fsSL \
-              -H "Accept: application/vnd.github+json" \
-              -H "Authorization: Bearer ${GH_TOKEN}" \
-              -H "X-GitHub-Api-Version: 2022-11-28" \
-              -o "$package" \
-              "https://api.github.com/repos/${SOURCE_REPO}/actions/artifacts/${artifact_id}/zip"
-
-            test "$expected_digest" = "sha256:$(sha256sum "$package" | cut -d ' ' -f 1)"
-            test "$(dpkg-deb --field "$package" Package)" = "$expected_package"
-            test "$(dpkg-deb --field "$package" Architecture)" = "$expected_arch"
-            install -m 0644 "$package" "debs/$deb_name"
-            dpkg-deb --field "$package" Version
-          }
+          test "$expected_digest" = "sha256:$(sha256sum "$archive" | cut -d ' ' -f 1)"
+          unzip -q "$archive" -d "$work/package"
+          package="$(find "$work/package" -type f -name '*.deb' -print -quit)"
+          test -n "$package"
+          test "$(dpkg-deb --field "$package" Package)" = com.python.ios.framework
+          test "$(dpkg-deb --field "$package" Architecture)" = iphoneos-arm
+          CPYTHON_VERSION="$(dpkg-deb --field "$package" Version)"
 
           rm -f debs/*.deb
-          CPYTHON_VERSION="$(download_artifact "$CPYTHON_ARTIFACT_PATTERN" python3.14 iphoneos-arm)"
-          FRIDA_VERSION="$(download_artifact "$FRIDA_ARTIFACT_PATTERN" python3.14-frida iphoneos-arm64)"
-          printf 'CPYTHON_VERSION=%s\nFRIDA_VERSION=%s\n' \
-            "$CPYTHON_VERSION" "$FRIDA_VERSION" >> "$GITHUB_ENV"
+          install -m 0644 "$package" \
+            "debs/com.python.ios.framework_${CPYTHON_VERSION}_iphoneos-arm.deb"
+          printf 'CPYTHON_VERSION=%s\n' "$CPYTHON_VERSION" >> "$GITHUB_ENV"
 
-      - name: Rebuild feed metadata
+      - name: Update repository indexes
         run: |
           set -euo pipefail
           dpkg-scanpackages -m debs /dev/null > Packages
@@ -85,9 +76,9 @@ jobs:
               'Suite: stable' \
               "Version: $CPYTHON_VERSION" \
               'Codename: ios' \
-              'Architectures: iphoneos-arm iphoneos-arm64' \
+              'Architectures: iphoneos-arm' \
               'Components: main' \
-              'Description: Standalone CPython and Frida Python bindings for iOS' \
+              'Description: Standalone CPython for iOS' \
               '' \
               'MD5Sum:'
             for file in Packages Packages.gz Packages.bz2; do
@@ -110,5 +101,5 @@ jobs:
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add Packages Packages.gz Packages.bz2 Release debs
           git diff --cached --quiet && exit 0
-          git commit -m "Publish CPython $CPYTHON_VERSION and Frida $FRIDA_VERSION"
+          git commit -m "Publish CPython $CPYTHON_VERSION"
           git push

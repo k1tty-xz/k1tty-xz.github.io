@@ -1,17 +1,17 @@
 Origin: k1tty-xz
 Label: k1tty-xz
 Suite: stable
-Version: 3.14.7-8
+Version: 3.14.7-1
 Codename: ios
-Architectures: iphoneos-arm iphoneos-arm64
+Architectures: iphoneos-arm
 Components: main
-Description: Standalone CPython and Frida Python bindings for iOS
+Description: Standalone CPython for iOS
 
 MD5Sum:
- 86806caf091c61031fe9a4d9a962ef5f             1012 Packages
- d7ff6b9857ac5c50934de67c7de618c6              541 Packages.gz
- e6d4d1c109842ee8252ac209afeb63a8              620 Packages.bz2
+ efb4066ee555ee7ef19ecb0b8a4c920b             627 Packages
+ c242e9e5b711eb9f9490e30d42c7b243             427 Packages.gz
+ 642106024c3a85a030a68bac1570d09d             458 Packages.bz2
 SHA256:
- a0693aea7ad5e92dfea7bb274413dbbc25b8d4b2bbee61a356ea46bbeb21975d             1012 Packages
- 57ffdd32d00bf2cef19b84d61e8c13c056280f5e8bf516ba5e01e3e17d65726c              541 Packages.gz
- a6b2ea2d142dc48eb2a4776c4ed882347d398c62afde9f0c33722f980391cd98              620 Packages.bz2
+ 331569bb7bf7524a5b975afd8daa609cfbb237653dcab991d13337bc44cbfcfa             627 Packages
+ c03fee0e524889794cdbe75ae8e5bd7dac157f9fa3051bf8519acc0610e45ad4             427 Packages.gz
+ c83f890920f3d941e6250cf483a489d9b68962141888b0d86be3163e44a15b6e             458 Packages.bz2
