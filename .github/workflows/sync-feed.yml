@@ -1,4 +1,4 @@
-name: Publish Python package
+name: Update Python package feed
 
 on:
   workflow_dispatch:
@@ -15,7 +15,7 @@ env:
   ARTIFACT_NAME: python-ios-framework
 
 jobs:
-  publish:
+  update:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
@@ -94,12 +94,12 @@ jobs:
 
           git diff --check
 
-      - name: Publish
+      - name: Commit feed update
         run: |
           set -euo pipefail
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add Packages Packages.gz Packages.bz2 Release debs
           git diff --cached --quiet && exit 0
-          git commit -m "Publish CPython $CPYTHON_VERSION"
+          git commit -m "Update Python package feed $CPYTHON_VERSION"
           git push
