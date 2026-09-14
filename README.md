@@ -1,28 +1,13 @@
-# Python3.14.7 for jailbroken iOS
+# Python 3.14.7 for iOS
 
-Package repository for the rootful CPython build from
-[k1tty-xz/python-ios](https://github.com/k1tty-xz/python-ios).
-
-## Current package
+Rootful CPython for jailbroken iOS devices.
 
 - Package: `com.python.ios.framework`
 - Version: `3.14.7-1`
 - Architecture: `iphoneos-arm`
-- Title: `Python3.14.7`
 - Prefix: `/usr/local`
-- Target: arm64 jailbroken iOS devices
 - Includes the standard library and pip
 
-The build and feed checks passed. This revision awaits a rootful device
-regression test.
+Package feed: <https://k1tty-xz.github.io/>
 
-## Install
-
-Add this source to your package manager:
-
-`https://k1tty-xz.github.io/`
-
-Then install `Python3.14.7`. Start Python with `python3` and use pip with
-`python3 -m pip`.
-
-Rootless packaging and the optional `readline` extension are not included yet.
+Source: [k1tty-xz/python-ios](https://github.com/k1tty-xz/python-ios)
