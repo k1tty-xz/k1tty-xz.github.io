@@ -58,7 +58,7 @@ jobs:
           printf '%s\n' \
             'com.python.ios.framework Icon https://k1tty-xz.github.io/assets/python-ios-icon.png' \
             > "$RUNNER_TEMP/python-ios-icon.override"
-          dpkg-scanpackages -m -e "$RUNNER_TEMP/python-ios-icon.override" debs /dev/null > Packages
+          dpkg-scanpackages -m -e "$RUNNER_TEMP/python-ios-icon.override" debs > Packages
           gzip -9 -n -c Packages > Packages.gz
           bzip2 -9 -c Packages > Packages.bz2
 
