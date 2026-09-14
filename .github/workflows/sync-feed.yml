@@ -12,7 +12,6 @@ permissions:
 
 env:
   SOURCE_REPO: k1tty-xz/python-ios
-  ARTIFACT_NAME: python-ios-framework
 
 jobs:
   update:
@@ -21,55 +20,56 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Download latest packages
+      - name: Find latest package artifact
+        id: artifact
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          work="$(mktemp -d)"
-          trap 'rm -rf "$work"' EXIT
+          artifact="$(gh api \
+            "repos/${SOURCE_REPO}/actions/artifacts?per_page=100" \
+            --jq '[.artifacts[]
+              | select(.expired == false
+                and (.name | endswith(".deb"))
+                and .workflow_run.head_branch == "main")]
+              | max_by(.updated_at)')"
+          test "$artifact" != null
+          echo "id=$(jq -r .id <<<"$artifact")" >> "$GITHUB_OUTPUT"
+          echo "run_id=$(jq -r .workflow_run.id <<<"$artifact")" >> "$GITHUB_OUTPUT"
 
-          artifact="$(curl -fsSL \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${GH_TOKEN}" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            "https://api.github.com/repos/${SOURCE_REPO}/actions/artifacts?per_page=100" \
-            | jq -cer --arg name "$ARTIFACT_NAME" \
-              '[.artifacts[] | select(.expired == false and .name == $name)]
-               | sort_by(.updated_at) | last')"
+      - name: Download package
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          artifact-ids: ${{ steps.artifact.outputs.id }}
+          github-token: ${{ github.token }}
+          repository: ${{ env.SOURCE_REPO }}
+          run-id: ${{ steps.artifact.outputs.run_id }}
+          path: package
 
-          artifact_id="$(jq -r .id <<<"$artifact")"
-          expected_digest="$(jq -r .digest <<<"$artifact")"
-          archive="$work/artifact.zip"
-
-          curl -fsSL \
-            -H "Accept: application/vnd.github+json" \
-            -H "Authorization: Bearer ${GH_TOKEN}" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            -o "$archive" \
-            "https://api.github.com/repos/${SOURCE_REPO}/actions/artifacts/${artifact_id}/zip"
-
-          test "$expected_digest" = "sha256:$(sha256sum "$archive" | cut -d ' ' -f 1)"
-          unzip -q "$archive" -d "$work/package"
-          package="$(find "$work/package" -type f -name '*.deb' -print -quit)"
-          test -n "$package"
-          test "$(dpkg-deb --field "$package" Package)" = com.python.ios.framework
-          test "$(dpkg-deb --field "$package" Architecture)" = iphoneos-arm
-          CPYTHON_VERSION="$(dpkg-deb --field "$package" Version)"
-
-          rm -f debs/*.deb
-          install -m 0644 "$package" \
-            "debs/com.python.ios.framework_${CPYTHON_VERSION}_iphoneos-arm.deb"
-          printf 'CPYTHON_VERSION=%s\n' "$CPYTHON_VERSION" >> "$GITHUB_ENV"
-
-      - name: Update repository indexes
+      - name: Install package
+        id: package
         run: |
           set -euo pipefail
-          icon_override="$RUNNER_TEMP/python-ios-icon.override"
+          set -- package/*.deb
+          test "$#" -eq 1
+          package=$1
+          test "$(dpkg-deb --field "$package" Package)" = com.python.ios.framework
+          test "$(dpkg-deb --field "$package" Architecture)" = iphoneos-arm
+
+          version=$(dpkg-deb --field "$package" Version)
+          rm -f debs/*.deb
+          install -m 0644 "$package" "debs/com.python.ios.framework_${version}_iphoneos-arm.deb"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Update repository indexes
+        env:
+          VERSION: ${{ steps.package.outputs.version }}
+        run: |
+          set -euo pipefail
           printf '%s\n' \
             'com.python.ios.framework Icon https://k1tty-xz.github.io/assets/python-ios-icon.png' \
-            > "$icon_override"
-          dpkg-scanpackages -m -e "$icon_override" debs /dev/null > Packages
+            > "$RUNNER_TEMP/python-ios-icon.override"
+          dpkg-scanpackages -m -e "$RUNNER_TEMP/python-ios-icon.override" debs /dev/null > Packages
           gzip -9 -n -c Packages > Packages.gz
           bzip2 -9 -c Packages > Packages.bz2
 
@@ -78,32 +78,38 @@ jobs:
               'Origin: k1tty-xz' \
               'Label: k1tty-xz' \
               'Suite: stable' \
-              "Version: $CPYTHON_VERSION" \
+              "Version: $VERSION" \
               'Codename: ios' \
               'Architectures: iphoneos-arm' \
               'Components: main' \
-              'Description: Python 3.14.7 for jailbroken iOS' \
+              "Description: Python $VERSION for jailbroken iOS" \
               '' \
               'MD5Sum:'
             for file in Packages Packages.gz Packages.bz2; do
               printf ' %s %16s %s\n' \
-                "$(md5sum "$file" | cut -d ' ' -f 1)" "$(stat -c '%s' "$file")" "$file"
+                "$(md5sum "$file" | cut -d ' ' -f 1)" \
+                "$(stat -c '%s' "$file")" "$file"
             done
             printf '%s\n' 'SHA256:'
             for file in Packages Packages.gz Packages.bz2; do
               printf ' %s %16s %s\n' \
-                "$(sha256sum "$file" | cut -d ' ' -f 1)" "$(stat -c '%s' "$file")" "$file"
+                "$(sha256sum "$file" | cut -d ' ' -f 1)" \
+                "$(stat -c '%s' "$file")" "$file"
             done
           } > Release
 
           git diff --check
 
       - name: Commit feed update
+        env:
+          VERSION: ${{ steps.package.outputs.version }}
         run: |
           set -euo pipefail
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add Packages Packages.gz Packages.bz2 Release debs
-          git diff --cached --quiet && exit 0
-          git commit -m "Update Python package feed $CPYTHON_VERSION"
+          git add Packages Packages.gz Release debs
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "Update Python package feed $VERSION"
           git push
