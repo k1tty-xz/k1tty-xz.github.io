@@ -2,13 +2,17 @@ name: Update Python package feed
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '17 3 * * *'
   push:
     branches: [main]
     paths:
       - .github/workflows/sync-feed.yml
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 env:
   SOURCE_REPO: k1tty-xz/python-ios
@@ -16,6 +20,9 @@ env:
 jobs:
   update:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -29,13 +36,13 @@ jobs:
             --repo "$SOURCE_REPO" \
             --pattern '*.deb' \
             --clobber \
-            --dir package
+            --dir "$RUNNER_TEMP/package"
 
       - name: Install package
         id: package
         run: |
           set -euo pipefail
-          set -- package/*.deb
+          set -- "$RUNNER_TEMP"/package/*.deb
           package=$1
 
           version=$(dpkg-deb --field "$package" Version)
@@ -80,16 +87,14 @@ jobs:
             done
           } > Release
 
-      - name: Commit feed update
-        env:
-          VERSION: ${{ steps.package.outputs.version }}
-        run: |
-          set -euo pipefail
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add Packages Packages.gz Release debs
-          if git diff --cached --quiet; then
-            exit 0
-          fi
-          git commit -m "Update Python package feed $VERSION"
-          git push
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # v4
+        with:
+          path: .
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
