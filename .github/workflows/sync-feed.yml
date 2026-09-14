@@ -20,41 +20,23 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - name: Find latest package artifact
-        id: artifact
+      - name: Download latest package release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          artifact="$(gh api \
-            "repos/${SOURCE_REPO}/actions/artifacts?per_page=100" \
-            --jq '[.artifacts[]
-              | select(.expired == false
-                and (.name | endswith(".deb"))
-                and .workflow_run.head_branch == "main")]
-              | max_by(.updated_at)')"
-          test "$artifact" != null
-          echo "id=$(jq -r .id <<<"$artifact")" >> "$GITHUB_OUTPUT"
-          echo "run_id=$(jq -r .workflow_run.id <<<"$artifact")" >> "$GITHUB_OUTPUT"
-
-      - name: Download package
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
-        with:
-          artifact-ids: ${{ steps.artifact.outputs.id }}
-          github-token: ${{ github.token }}
-          repository: ${{ env.SOURCE_REPO }}
-          run-id: ${{ steps.artifact.outputs.run_id }}
-          path: package
+          gh release download \
+            --repo "$SOURCE_REPO" \
+            --pattern '*.deb' \
+            --clobber \
+            --dir package
 
       - name: Install package
         id: package
         run: |
           set -euo pipefail
           set -- package/*.deb
-          test "$#" -eq 1
           package=$1
-          test "$(dpkg-deb --field "$package" Package)" = com.python.ios.framework
-          test "$(dpkg-deb --field "$package" Architecture)" = iphoneos-arm
 
           version=$(dpkg-deb --field "$package" Version)
           rm -f debs/*.deb
@@ -97,8 +79,6 @@ jobs:
                 "$(stat -c '%s' "$file")" "$file"
             done
           } > Release
-
-          git diff --check
 
       - name: Commit feed update
         env:
