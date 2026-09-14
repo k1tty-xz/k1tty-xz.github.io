@@ -8,10 +8,10 @@ Components: main
 Description: Python 3.14.7 for jailbroken iOS
 
 MD5Sum:
- efb4066ee555ee7ef19ecb0b8a4c920b              627 Packages
- c242e9e5b711eb9f9490e30d42c7b243              427 Packages.gz
- 642106024c3a85a030a68bac1570d09d              458 Packages.bz2
+ fcaf0bb3fc764cef8b6c1d640970fd9b              687 Packages
+ fe652471087edad7e19ca560d708875a              458 Packages.gz
+ d94bbd6907fd34887025537929eeac9c              502 Packages.bz2
 SHA256:
- 331569bb7bf7524a5b975afd8daa609cfbb237653dcab991d13337bc44cbfcfa              627 Packages
- c03fee0e524889794cdbe75ae8e5bd7dac157f9fa3051bf8519acc0610e45ad4              427 Packages.gz
- c83f890920f3d941e6250cf483a489d9b68962141888b0d86be3163e44a15b6e              458 Packages.bz2
+ 2c9b8d8ea473d403f50b295ba1f71c2490093b7ed546c0b5d2e8cb43aece7058              687 Packages
+ f3128a8714c5fea7f83862539e2649fa9de6e46dddb0e8d714231e5b05bfbe02              458 Packages.gz
+ b30e2526dd978e736f7b0e024dbce0d94a8b708ff6889af3484b9d2171aa3f47              502 Packages.bz2

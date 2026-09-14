@@ -4,15 +4,16 @@ Architecture: iphoneos-arm
 Maintainer: k1tty-xz
 Depends: firmware, ca-certificates
 Filename: debs/com.python.ios.framework_3.14.7-1_iphoneos-arm.deb
-Size: 15613972
-MD5sum: a669834b43f9260c03697916db4c9813
-SHA1: 9d6aa96c60cc46ec5bc89270598cdfd26da08da4
-SHA256: 3e6737f52334ac44a82a74b9428f9814d602ec951a135dbd0516782c7ec8dd85
+Size: 15613092
+MD5sum: e165b501b896b5fcd3f8b744d6da4dc1
+SHA1: 6525d648bb170d2d013fb696e84a0170f2eefe4f
+SHA256: ea52f24cb59d0248cdaba302bc0e85269eea4052152de7c3fb1782180fc1f579
 Section: interpreters
 Priority: optional
 Homepage: https://www.python.org/
 Description: CPython 3.14 framework for rootful iOS
  An arm64 CPython runtime for rootful iOS, including Python.framework, the
  standard library, and pip.
+Icon: https://k1tty-xz.github.io/assets/python-ios-icon.png
 Name: Python3.14.7
 
