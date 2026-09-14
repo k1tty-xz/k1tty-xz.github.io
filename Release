@@ -5,13 +5,13 @@ Version: 3.14.7-1
 Codename: ios
 Architectures: iphoneos-arm
 Components: main
-Description: Python 3.14.7 for jailbroken iOS
+Description: Python 3.14.7-1 for jailbroken iOS
 
 MD5Sum:
- fcaf0bb3fc764cef8b6c1d640970fd9b              687 Packages
- fe652471087edad7e19ca560d708875a              458 Packages.gz
- d94bbd6907fd34887025537929eeac9c              502 Packages.bz2
+ e6ede359998864b70091488d4c5fe95d              687 Packages
+ 4a89afe995d7ab423190f75397b4a9cc              457 Packages.gz
+ 1dbf923401f713c52fe0075c552e5386              502 Packages.bz2
 SHA256:
- 2c9b8d8ea473d403f50b295ba1f71c2490093b7ed546c0b5d2e8cb43aece7058              687 Packages
- f3128a8714c5fea7f83862539e2649fa9de6e46dddb0e8d714231e5b05bfbe02              458 Packages.gz
- b30e2526dd978e736f7b0e024dbce0d94a8b708ff6889af3484b9d2171aa3f47              502 Packages.bz2
+ e66916527f8a9945cbb7ec91d637648eda0977501c61a5b2a07639981f55219c              687 Packages
+ e899477d7e997b557e4aabbc46f1efc01869bd7f44ac04665a67888726619081              457 Packages.gz
+ eea8096b67e7136a0f37868a6d5b3c71893d867ae8f8fb126c550370528bf1e5              502 Packages.bz2
